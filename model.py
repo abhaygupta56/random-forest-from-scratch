@@ -38,8 +38,22 @@ def split_dataset(features, labels, feature_index, threshold):
 
     return left_features,left_labels,right_features,right_labels
 
-# Step 3 - split_score (not yet solved)
-# TODO: implement
+# Step 3 - split_score
+def split_score(parent_labels, left_labels, right_labels):
+    parent_impurity = impurity(parent_labels)
+    left_impurity = impurity(left_labels)
+    right_impurity = impurity(right_labels)
+
+    n = len(parent_labels)
+    left_weight = len(left_labels) / n
+    right_weight = len(right_labels) / n
+
+    children_impurity = (
+        left_weight * left_impurity +
+        right_weight * right_impurity
+    )
+
+    return float(parent_impurity - children_impurity)
 
 # Step 4 - best_split (not yet solved)
 # TODO: implement
