@@ -181,8 +181,17 @@ def predict_tree(tree, features):
         for example in features
     ], dtype=int)
 
-# Step 10 - bootstrap_sample (not yet solved)
-# TODO: implement
+# Step 10 - bootstrap_sample
+import numpy as np
+
+def bootstrap_sample(features, labels, rng):
+    n = len(features)
+    indices = rng.integers(0, n, size=n)
+
+    sampled_features = features[indices]
+    sampled_labels = labels[indices]
+
+    return sampled_features, sampled_labels
 
 # Step 11 - feature_subset (not yet solved)
 # TODO: implement
