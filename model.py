@@ -280,6 +280,9 @@ def predict_forest(forest, features):
 
     return np.asarray(combine_predictions(all_predictions), dtype=int)
 
-# Step 15 - accuracy (not yet solved)
-# TODO: implement
+# Step 15 - accuracy
+import numpy as np
+
+def accuracy(predictions, labels):
+    return float(np.mean(predictions == labels))
 
