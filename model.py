@@ -204,7 +204,15 @@ def feature_subset(num_features, num_to_pick, rng):
 # Step 12 - train_forest
 import numpy as np
 
-def train_forest(X, y, num_trees, num_features_per_split=None, random_state=None):
+def train_forest(
+    X,
+    y,
+    num_trees,
+    num_features_per_split=None,
+    max_depth=10,
+    min_samples_split=2,
+    random_state=None
+):
     n_samples, n_features = X.shape
 
     if num_features_per_split is None:
@@ -221,12 +229,12 @@ def train_forest(X, y, num_trees, num_features_per_split=None, random_state=None
         )
 
         tree = build_tree(
-            X_bootstrap[:, feature_indices],
+            X_bootstrap,
             y_bootstrap,
             depth=0,
-            max_depth=10,
-            min_samples_split=2,
-            feature_subset=range(len(feature_indices))
+            max_depth=max_depth,
+            min_samples_split=min_samples_split,
+            feature_subset=feature_indices
         )
 
         forest.append({
