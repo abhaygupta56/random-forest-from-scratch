@@ -244,8 +244,22 @@ def train_forest(
 
     return forest
 
-# Step 13 - combine_predictions (not yet solved)
-# TODO: implement
+# Step 13 - combine_predictions
+import numpy as np
+
+def combine_predictions(tree_predictions):
+    n_trees, n_samples = tree_predictions.shape
+    predictions = np.empty(n_samples, dtype=int)
+
+    for i in range(n_samples):
+        classes, counts = np.unique(
+            tree_predictions[:, i],
+            return_counts=True
+        )
+
+        predictions[i] = classes[np.argmax(counts)]
+
+    return predictions
 
 # Step 14 - predict_forest (not yet solved)
 # TODO: implement
