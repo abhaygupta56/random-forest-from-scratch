@@ -90,6 +90,8 @@ def best_split(features, labels, feature_indices):
     }
 
 # Step 5 - should_stop
+import numpy as np
+
 def should_stop(labels, depth, max_depth, min_samples_split):
     if len(np.unique(labels)) == 1:
         return True
@@ -199,8 +201,40 @@ import numpy as np
 def feature_subset(num_features, num_to_pick, rng):
     return rng.choice(num_features, size=num_to_pick, replace=False)
 
-# Step 12 - train_forest (not yet solved)
-# TODO: implement
+# Step 12 - train_forest
+import numpy as np
+
+def train_forest(X, y, num_trees, num_features_per_split=None, random_state=None):
+    n_samples, n_features = X.shape
+
+    if num_features_per_split is None:
+        num_features_per_split = max(1, round(np.sqrt(n_features)))
+
+    rng = np.random.default_rng(random_state)
+    forest = []
+
+    for _ in range(num_trees):
+        X_bootstrap, y_bootstrap = bootstrap_sample(X, y, rng)
+
+        feature_indices = feature_subset(
+            n_features, num_features_per_split, rng
+        )
+
+        tree = build_tree(
+            X_bootstrap[:, feature_indices],
+            y_bootstrap,
+            depth=0,
+            max_depth=10,
+            min_samples_split=2,
+            feature_subset=range(len(feature_indices))
+        )
+
+        forest.append({
+            "tree": tree,
+            "feature_indices": feature_indices
+        })
+
+    return forest
 
 # Step 13 - combine_predictions (not yet solved)
 # TODO: implement
