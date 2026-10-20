@@ -261,8 +261,24 @@ def combine_predictions(tree_predictions):
 
     return predictions
 
-# Step 14 - predict_forest (not yet solved)
-# TODO: implement
+# Step 14 - predict_forest
+import numpy as np
+
+def predict_forest(forest, features):
+    if len(forest) == 0:
+        return np.array([], dtype=int)
+
+    all_predictions = []
+
+    for item in forest:
+        tree = item["tree"]
+
+        predictions = predict_tree(tree, features)
+        all_predictions.append(predictions)
+
+    all_predictions = np.array(all_predictions)
+
+    return np.asarray(combine_predictions(all_predictions), dtype=int)
 
 # Step 15 - accuracy (not yet solved)
 # TODO: implement
