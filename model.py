@@ -1,16 +1,8 @@
-"""
-Random Forest from Scratch
 
-Assembled from your step-by-step solutions.
-"""
-
-import numpy as np
-
-# Step 1 - impurity
 import numpy as np
 
 def impurity(labels):
-    """Return a non-negative impurity score for a 1D array of integer class labels."""
+    
 
     if len(labels) == 0:
         return 0.0
@@ -23,11 +15,8 @@ def impurity(labels):
 
     return float(gini)
 
-# Step 2 - split_dataset
-import numpy as np
-
 def split_dataset(features, labels, feature_index, threshold):
-    # TODO: partition rows into left (feature <= threshold) and right (feature > threshold)
+    
     mask = features[:, feature_index] <= threshold
 
     left_features = features[mask]
@@ -38,7 +27,7 @@ def split_dataset(features, labels, feature_index, threshold):
 
     return left_features,left_labels,right_features,right_labels
 
-# Step 3 - split_score
+
 def split_score(parent_labels, left_labels, right_labels):
     parent_impurity = impurity(parent_labels)
     left_impurity = impurity(left_labels)
@@ -55,8 +44,7 @@ def split_score(parent_labels, left_labels, right_labels):
 
     return float(parent_impurity - children_impurity)
 
-# Step 4 - best_split
-import numpy as np
+
 
 def best_split(features, labels, feature_indices):
     best_feature = None
@@ -89,8 +77,6 @@ def best_split(features, labels, feature_indices):
         "score": float(best_score)
     }
 
-# Step 5 - should_stop
-import numpy as np
 
 def should_stop(labels, depth, max_depth, min_samples_split):
     if len(np.unique(labels)) == 1:
@@ -104,15 +90,13 @@ def should_stop(labels, depth, max_depth, min_samples_split):
 
     return False
 
-# Step 6 - leaf_prediction
-import numpy as np
+
 
 def leaf_prediction(labels):
     values, counts = np.unique(labels, return_counts=True)
     return int(values[np.argmax(counts)])
 
-# Step 7 - build_tree
-import numpy as np
+
 
 def build_tree(features, labels, depth=0, max_depth=10, min_samples_split=2, feature_subset=None):
     if should_stop(labels, depth, max_depth, min_samples_split):
@@ -161,7 +145,6 @@ def build_tree(features, labels, depth=0, max_depth=10, min_samples_split=2, fea
         )
     }
 
-# Step 8 - predict_example_tree
 def predict_example_tree(tree, example):
     while not tree['leaf']:
         feature_index = tree['feature_index']
@@ -174,8 +157,6 @@ def predict_example_tree(tree, example):
 
     return int(tree['prediction'])
 
-# Step 9 - predict_tree
-import numpy as np
 
 def predict_tree(tree, features):
     return np.array([
@@ -183,8 +164,6 @@ def predict_tree(tree, features):
         for example in features
     ], dtype=int)
 
-# Step 10 - bootstrap_sample
-import numpy as np
 
 def bootstrap_sample(features, labels, rng):
     n = len(features)
@@ -195,14 +174,11 @@ def bootstrap_sample(features, labels, rng):
 
     return sampled_features, sampled_labels
 
-# Step 11 - feature_subset
-import numpy as np
 
 def feature_subset(num_features, num_to_pick, rng):
     return rng.choice(num_features, size=num_to_pick, replace=False)
 
-# Step 12 - train_forest
-import numpy as np
+
 
 def train_forest(
     X,
@@ -244,8 +220,6 @@ def train_forest(
 
     return forest
 
-# Step 13 - combine_predictions
-import numpy as np
 
 def combine_predictions(tree_predictions):
     n_trees, n_samples = tree_predictions.shape
@@ -260,9 +234,6 @@ def combine_predictions(tree_predictions):
         predictions[i] = classes[np.argmax(counts)]
 
     return predictions
-
-# Step 14 - predict_forest
-import numpy as np
 
 def predict_forest(forest, features):
     if len(forest) == 0:
@@ -280,8 +251,6 @@ def predict_forest(forest, features):
 
     return np.asarray(combine_predictions(all_predictions), dtype=int)
 
-# Step 15 - accuracy
-import numpy as np
 
 def accuracy(predictions, labels):
     return float(np.mean(predictions == labels))
